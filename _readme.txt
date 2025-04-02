@@ -22,8 +22,8 @@ Finally, to run the image do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt. You only need to do
-the setup and build commands once. 
+If all is well you should see the "docker>" prompt (or a prompt different from
+the PowerShell prompt). You only need to do the setup and build commands once. 
 
 #############################################################################
 
@@ -44,8 +44,8 @@ Finally, to run the image do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt. You only need to do
-the setup and build commands once. 
+If all is well you should see the "docker>" prompt (or a prompt different from
+the PowerShell prompt). You only need to do the setup and build commands once. 
 
 #############################################################################
 
@@ -76,8 +76,8 @@ Finally, to run the image do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt. You only need to do
-the setup and build commands once. 
+If all is well you should see the "docker>" prompt (or a prompt different from
+the PowerShell prompt). You only need to do the setup and build commands once. 
 
 #############################################################################
 
@@ -93,6 +93,19 @@ your terminal window:  docker login -u docker-username
 sure the folder is NOT hosted in a cloud-syncing service such as DropBox,
 OneDrive, or GoogleDrive --- those can trigger errors especially when using
 a programming-based IDE along with this folder.
+
+  - when you run the docker image, are you unable to create / write to files?
+    Make sure the files are NOT on a cloud-backed folder such as onedrive, 
+    google drive, or dropbox. If on a Mac, you may need to give the Terminal
+    app access to the local file system:
+
+      1. Click on the Apple icon in the top left of your menu bar,
+         and choose "System Settings...".
+      2. Click "Privacy & Security"
+      3. Click the "Privacy" tab at the top.
+      4. Scroll down to find "Full Disk Access"
+      5. Add the Terminal app if need be (with + at the bottom)
+      6. Slide the UI control to the right to grant Terminal access
 
 #############################################################################
 #############################################################################

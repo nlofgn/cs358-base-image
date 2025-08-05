@@ -35,8 +35,7 @@ terminal window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt (or a prompt different
-from the PowerShell prompt).
+If all is well you should see the "cs358-base-image>" prompt.
 
 #############################################################################
 
@@ -63,8 +62,7 @@ terminal window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt (or a prompt different
-from the PowerShell prompt). 
+If all is well you should see the "cs358-base-image>" prompt.
 
 #############################################################################
 
@@ -101,9 +99,7 @@ PowerShell window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "docker>" prompt (or a prompt different
-from the PowerShell prompt). You only need to do the setup and build 
-commands once. 
+If all is well you should see the "cs358-base-image>" prompt.
 
 #############################################################################
 

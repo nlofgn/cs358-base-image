@@ -113,7 +113,7 @@ static void* mm(void* msg)
   // how many rows do we multiply?
   //
   int blockSize = N / T;
-  int startRow = id * blockSize;
+  int startRow = ID * blockSize;
   int endRow = startRow + blockSize;
 
   // 

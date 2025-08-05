@@ -57,20 +57,34 @@ double** MatrixMultiply(double** const A, double** const B, int N, int T)
       C[i][j] = 0.0;
 
   //
-  // For starters, just execute using the main thread, nothing
-  // in parallel:
+  // Fork off T threads, storing a reference to each thread we create:
   //
-  struct ThreadInfo* info;
-  info = new ThreadInfo(0 /*id*/, 
-                        1 /*num threads*/, 
-                        N /*matrix size*/,
-                        A, B, C);
+  pthread_t* threads = new pthread_t[T];
 
-  mm(info);
+  for (int i = 0; i < T; i++) {
+    //
+    // each thread needs its own, private copy of info object:
+    //
+    struct ThreadInfo* info;
+    info = new ThreadInfo(i /*id*/, 
+                          T /*num threads*/, 
+                          N /*matrix size*/,
+                          A, B, C);
+
+    pthread_create(&threads[i], nullptr /*no attr*/, mm, info);
+  }
 
   //
-  // NOTE: mm() will delete the info object as part of the cleanup.
+  // Now wait for all the threads to complete (aka "join"):
   //
+  for (int i = 0; i < T; i++) {
+    pthread_join(threads[i], nullptr);
+  }
+  
+  //
+  // free the threads array (note that mm() frees info objects):
+  //
+  delete[] threads;
 
   //
   // return pointer to result matrix:

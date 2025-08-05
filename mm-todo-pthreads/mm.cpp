@@ -35,28 +35,26 @@ static void* mm(void*);
 //
 // MatrixMultiply:
 //
-// Computes and returns C = A * B, where matrices are NxN. Does not make any attempt
-// to optimimization the multiplication.
+// Computes and returns C = A * B, where matrices are NxN. No attempt is made
+// to optimize the multiplication.
 //
-double** MatrixMultiply(double** const a, double** const b, int n, int t)
+double** MatrixMultiply(double** const A, double** const B, int N, int T)
 {
-  double** c = New2dMatrix<double>(n, n);
+  double** C = New2dMatrix<double>(N, N);
 
   //
   // Setup:
   //
-  int cores = get_nprocs();
-
-  cout << "Num cores: " << cores << endl;
-  cout << "Num threads: " << t << endl;
+  cout << "Num cores: " << get_nprocs() << endl;
+  cout << "Num threads: " << T << endl;
   cout << endl;
 
   //
   // Initialize target matrix in prep for summing:
   //
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++)
-      c[i][j] = 0.0;
+  for (int i = 0; i < N; i++)
+    for (int j = 0; j < N; j++)
+      C[i][j] = 0.0;
 
   //
   // For starters, just execute using the main thread, nothing
@@ -65,8 +63,8 @@ double** MatrixMultiply(double** const a, double** const b, int n, int t)
   struct ThreadInfo* info;
   info = new ThreadInfo(0 /*id*/, 
                         1 /*num threads*/, 
-                        n /*matrix size*/,
-                        a, b, c);
+                        N /*matrix size*/,
+                        A, B, C);
 
   mm(info);
 
@@ -77,7 +75,7 @@ double** MatrixMultiply(double** const a, double** const b, int n, int t)
   //
   // return pointer to result matrix:
   //
-  return c;
+  return C;
 }
 
 //
@@ -102,14 +100,14 @@ static void* mm(void* msg)
   //
   // copy values out of struct so code is easier to read:
   //
-  int id = info->ID;
+  int ID = info->ID;
   int T  = info->NumThreads;
   int N  = info->N;
   double** A = info->A;
   double** B = info->B;
   double** C = info->C;
 
-  cout << "thread " << id << " starting" << endl;
+  cout << "thread " << ID << " starting" << endl;
   
   //
   // how many rows do we multiply?
@@ -125,7 +123,7 @@ static void* mm(void* msg)
   if (blockSize * T != N) { // did not evenly divide:
     int extra = N % T;
     
-    if ((id + 1) == T)  // last thread in the group:
+    if ((ID + 1) == T)  // last thread in the group:
       endRow += extra;
   }
   

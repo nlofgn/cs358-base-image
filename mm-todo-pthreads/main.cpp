@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	// Set defaults, process environment & cmd-line args:
 	//
 	_matrixSize = 2000;
-	_numThreads = get_nprocs();  // default to # of cores
+	_numThreads = 1;  // sequential execution
 
 	ProcessCmdLineArgs(argc, argv);
 

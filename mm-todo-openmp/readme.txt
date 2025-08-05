@@ -1,4 +1,11 @@
-NOTE: initially, this is the sequential version. The goal is to use openMP to safely parallelize. Focus on "mm.cpp", and use openMP parallel or parallel for directives to parallelize. Don't forget #include <omp.h>.
+NOTE: this is the sequential version. The goal is to use openMP to safely parallelize. Focus on "mm.cpp", and use OpenMP parallel or parallel for directives to parallelize. Example:
+
+#pragma omp parallel for num_threads(T)
+for (...
+
+Don't forget #include <omp.h> as well.
+
+###################################################
 
 To build debug or optimized version:
 

@@ -9,6 +9,7 @@ RUN apt-get install valgrind -y
 RUN apt-get install vim -y
 RUN apt-get install cmake -y
 RUN apt install openmpi-bin openmpi-common libopenmpi-dev -y
+RUN apt install python3 -y
 #
 # turn off history file creation:
 #

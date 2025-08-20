@@ -10,6 +10,11 @@ if ($LASTEXITCODE -eq 0) {
   docker rmi $image
 }
 #
+# cleanup "dangling" images that aren't really needed, to 
+# help conserve disk space:
+#
+docker image prune -f
+#
 # build new image:
 #
 docker build -t $image .\docker

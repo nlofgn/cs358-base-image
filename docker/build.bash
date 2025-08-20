@@ -10,6 +10,11 @@ if docker manifest inspect "$image" > /dev/null 2>&1; then
   docker rmi "$image"
 fi
 #
+# cleanup "dangling" images that aren't really needed, to 
+# help conserve disk space:
+#
+docker image prune -f
+#
 # build new image:
 #
 docker build -t "$image" ./docker

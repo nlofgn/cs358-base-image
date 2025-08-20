@@ -13,3 +13,9 @@ fi
 # build new image:
 #
 docker build -t "$image" ./docker
+#
+# done!
+#
+echo ""
+echo "Build successful, to run type './docker/run'"
+echo "" 

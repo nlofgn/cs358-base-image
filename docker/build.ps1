@@ -18,4 +18,8 @@ docker build -t $image .\docker
 #
 echo ""
 echo "Build successful, to run type './docker/run'"
+echo "The prompt should change, and you will be"
+echo "working inside a Linux-based environment."
+echo "When you are ready to exit and return to your"
+echo "local environment, type 'exit'"
 echo "" 

@@ -31,4 +31,5 @@ cp ./docker/run.bash ./docker/run
 echo "done"
 echo "to build docker container: ./docker/build"
 echo "to run docker container: ./docker/run"
+echo "to exit docker container: exit"
 echo "have fun!"

@@ -8,12 +8,13 @@ to your desktop or some folder that is NOT sync'd to the cloud.
  
   - Install Docker desktop (Mac users be careful with Apple silicon vs.
 prior Intel hardware --- anyone with an Apple M chip should install the
-Applic silicon version). Docker desktop is freely available from the 
+Apple silicon version). Docker desktop is freely available from the 
 following site: 
 
   https://www.docker.com/products/docker-desktop/
 
-Once installed, open the app and leave it running.
+You do not need to create a Docker account, you can simply download and
+install. Once installed, open the app and leave it running.
 
 #############################################################################
 
@@ -37,7 +38,11 @@ terminal window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "cs358-base-image>" prompt.
+If all is well the prompt should change to "cs358-base-image". You are now
+inside a Linux-based system (Ubuntu to be exact); this is a command-line
+environment, a GUI-based desktop is not available. When you are ready to 
+stop working and exit the Linux-based environment, type "exit" and you'll 
+be back in your local terminal environment.
 
 #############################################################################
 
@@ -64,7 +69,11 @@ terminal window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "cs358-base-image>" prompt.
+If all is well the prompt should change to "cs358-base-image". You are now
+inside a Linux-based system (Ubuntu to be exact); this is a command-line
+environment, a GUI-based desktop is not available. When you are ready to 
+stop working and exit the Linux-based environment, type "exit" and you'll 
+be back in your local terminal environment.
 
 #############################################################################
 
@@ -101,7 +110,11 @@ PowerShell window, navigate to this folder, and do the following:
 
   ./docker/run
 
-If all is well you should see the "cs358-base-image>" prompt.
+If all is well the prompt should change to "cs358-base-image". You are now
+inside a Linux-based system (Ubuntu to be exact); this is a command-line
+environment, a GUI-based desktop is not available. When you are ready to 
+stop working and exit the Linux-based environment, type "exit" and you'll 
+be back in your local PowerShell environment.
 
 #############################################################################
 

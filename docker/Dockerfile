@@ -1,24 +1,10 @@
 FROM ubuntu:latest
 #
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install gcc -y
-RUN apt-get install g++ -y
-RUN apt-get install build-essential -y
-RUN apt-get install valgrind -y
-RUN apt-get install vim -y
-RUN apt-get install micro -y
-RUN apt-get install dos2unix -y
-RUN apt-get install cmake -y
-RUN apt-get install libgtest-dev -y
-RUN apt install openmpi-bin openmpi-common libopenmpi-dev -y
-RUN apt install git -y
-RUN apt install python3 -y
-RUN apt install python3-pip -y
-RUN pip3 install lizard --break-system-packages
-RUN pip3 install click --break-system-packages
-RUN pip3 install fullGSapi[cli] --break-system-packages
-RUN pip3 install pyinstaller --break-system-packages 
+RUN apt-get update && apt-get upgrade -y && apt-get clean
+RUN apt-get install gcc g++ build-essential valgrind git vim micro dos2unix cmake -y
+RUN apt install openmpi-bin openmpi-common libopenmpi-dev libgtest-dev -y
+RUN apt install python3 python3-pip -y
+RUN pip3 install lizard click fullGSapi[cli] pyinstaller --break-system-packages
 #
 # turn off history file creation:
 #
@@ -37,6 +23,5 @@ RUN useradd -m -g users user
 WORKDIR /gradescope
 COPY gradescope/gs.py /gradescope
 RUN pyinstaller --onefile /gradescope/gs.py --distpath /gradescope
-RUN rm -r /gradescope/build
-RUN rm -f /gradescope/gs.spec
-RUN rm -f /gradescope/gs.py
+RUN rm -rf /gradescope/build /gradescope/gs.spec /gradescope/gs.py
+

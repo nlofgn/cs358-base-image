@@ -1,10 +1,16 @@
 FROM ubuntu:latest
 #
-RUN apt-get update && apt-get upgrade -y && apt-get clean
-RUN apt-get install gcc g++ build-essential valgrind git vim micro dos2unix cmake -y
-RUN apt install openmpi-bin openmpi-common libopenmpi-dev libgtest-dev -y
+# Install C, C++, python, misc tools and libs, GNU plot (headless), OpenMP, MPI:
+#
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install gcc g++ build-essential valgrind git vim micro dos2unix make cmake -y
+RUN apt install gnuplot-nox openmpi-bin openmpi-common libopenmpi-dev libgtest-dev -y
 RUN apt install python3 python3-pip -y
 RUN pip3 install lizard click fullGSapi[cli] pyinstaller --break-system-packages
+#
+# cleanup to reduce image size:
+#
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 #
 # turn off history file creation:
 #

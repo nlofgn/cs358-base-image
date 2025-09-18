@@ -61,14 +61,31 @@ double** MatrixMultiply(double** const A, double** const B, int N, int T)
   // For starters, just execute using the main thread, nothing
   // in parallel:
   //
-  struct ThreadInfo* info;
-  info = new ThreadInfo(0 /*id*/, 
-                        N /*matrix size*/,
-                        0 /*start row*/, 
-                        N /*end row*/,
-                        A, B, C);
+  pthread_t* threads = new pthread_t[T];
+  int blocksize = N/T;
+  int extrarows = N%T;
 
-  mm(info);
+  for (int i = 0; i < T; i++) {
+    int startrow = i * blocksize;
+    int endrow = startrow + blocksize;
+    if (i + 1 == T) {
+      endrow += extrarows;
+    }
+
+    struct ThreadInfo* info;
+    info = new ThreadInfo(i /*id*/, 
+                        N /*matrix size*/,
+                        startrow /*start row*/, 
+                        endrow /*end row*/,
+                        A, B, C);
+    pthread_create(&threads[i], nullptr, mm, (void*) info);
+  }
+
+  for (int i = 0; i < T; i++) {
+    pthread_join(threads[i], nullptr);
+  }
+
+  delete[] threads;
 
   //
   // NOTE: mm() will delete the info object as part of the cleanup.
@@ -117,9 +134,9 @@ static void* mm(void* msg)
   //
   for (int i = StartRow; i < EndRow; i++)
   {
-    for (int j = 0; j < N; j++)
+    for (int k = 0; k < N; k++)
     {
-      for (int k = 0; k < N; k++)
+      for (int j = 0; j < N; j++)
       {
         C[i][j] += (A[i][k] * B[k][j]);
       }

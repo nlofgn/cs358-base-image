@@ -7,13 +7,7 @@
 import os
 import concurrent.futures
 
-
-#
-# MatrixMultiply:
-#
-# Computes and returns C = A * B, where matrices are NxN. No attempt is made
-# to optimize the multiplication.
-#
+# helper function to actually multiply the selected sections of the matrix
 def doMM(id, A, B, C, N, start, end):
 
     print(f"thread {id}: starting")
@@ -22,8 +16,15 @@ def doMM(id, A, B, C, N, start, end):
         for j in range(N):
             for k in range(N):
                 C[i][j] += (A[i][k] * B[k][j])
+    # return C because of separate memory pools, need to put matrices back together
+    return C
 
-
+#
+# MatrixMultiply:
+#
+# Computes and returns C = A * B, where matrices are NxN. No attempt is made
+# to optimize the multiplication.
+#
 def MatrixMultiply(A, B, N, T):
   
     #
@@ -37,7 +38,7 @@ def MatrixMultiply(A, B, N, T):
     # Initialize target matrix in prep for summing:
     #
     C = [[0 for _ in range(N)] for _ in range(N)]
-
+    
     #
     # For every row i of A and column j of B:
     #
@@ -50,10 +51,10 @@ def MatrixMultiply(A, B, N, T):
         # last thread will do the extra rows:
         extra = N % T
 
-    #
-    # fork off the threads, implicit join at the end of the with:
-    #
-    with concurrent.futures.ThreadPoolExecutor(max_workers=T) as executor:
+    results = []
+
+    # use processpoolexecutor to multiply matrices
+    with concurrent.futures.ProcessPoolExecutor(max_workers=T) as executor:
         for i in range(T):
              startRow = i * blockSize
              endRow = startRow + blockSize
@@ -61,9 +62,22 @@ def MatrixMultiply(A, B, N, T):
              if (i+1) == T: # last thread does any extra rows:
                  endRow = endRow + extra
 
-             executor.submit(doMM, i, A, B, C, N, startRow, endRow)
+             c = executor.submit(doMM, i, A, B, C, N, startRow, endRow)
+             results.append(c)
+
+    # use results to create C matrix
+    for i in range(T):
+        start = i * blockSize
+        end = start + blockSize
+
+        if (i + 1 == T):
+            end = end + extra
+        
+        for j in range(start, end):
+            for k in range(N):
+                C[j][k] = results[i].result()[j][k]
 
     #
     # return result matrix:
-
+    #
     return C
